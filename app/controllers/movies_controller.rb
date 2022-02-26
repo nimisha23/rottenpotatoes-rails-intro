@@ -7,21 +7,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
-    sort = params[:sort] || session[:sort]
-    case sort
-      when 'title'
-        ordering,@title_header = {:order => :title}, 'hilite'
-        @movies = Movie.order('title ASC')
-      when 'release_date'
-        ordering,@date_header = {:order => :release_date}, 'hilite'
-        @movies = Movie.order('release_date ASC')
-    end
-    
-     if params[:sort] != session[:sort]
-      session[:sort] = sort
-      redirect_to movies_path(:sort => sort)
-    end
+      @sort_param = sort_param
+      @rating_filter_param = rating_filer_params
+      @all_ratings = Movie.all_ratings
+
+      if @sort_param
+        @movies = Movie.with_ratings(@rating_filter_param).order(@sort_param)
+      else
+        @movies = Movie.with_ratings(@rating_filter_param)
+      end
   end
 
   def new
