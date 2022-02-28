@@ -5,6 +5,7 @@ class Movie < ActiveRecord::Base
     Movie.where(rating: ratings)
   end
 
+
   def self.all_ratings
     Movie.select(:rating).uniq.map do |record|
       record.rating

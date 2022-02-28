@@ -56,11 +56,11 @@ class MoviesController < ApplicationController
   def sort_param
       return session[:sort_param] if params[:sort].nil?
       session[:sort_param] = params[:sort]
-    end
+  end
 
-    def rating_filer_params
+  def rating_filer_params
       return session[:rating_filter_param] if params[:ratings].nil?
       return session[:rating_filter_param] = params[:ratings] if params[:ratings].is_a?(Array)
       session[:rating_filter_param] = params[:ratings].keys
-    end
+  end
 end
